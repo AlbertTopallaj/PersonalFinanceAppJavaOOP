@@ -2,8 +2,8 @@ package commands;
 
 public class Command {
 
-    String name;
-    String description;
+    protected String name;
+    protected String description;
 
     public Command(String name, String description){
 
@@ -12,6 +12,24 @@ public class Command {
 
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public String getName() {
+        return name;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    @Override
+    public String toString() {
+        return name + description;
+    }
 }
