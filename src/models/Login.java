@@ -4,6 +4,7 @@ package models;
 import commands.CreateTransactionCommand;
 import commands.DeleteTransactionCommand;
 import commands.ExitApplicationCommand;
+import commands.ListTransactionCommand;
 import services.ApplicationService;
 
 import java.util.Scanner;
@@ -42,6 +43,7 @@ public class Login {
 
             app.registerCommand(new CreateTransactionCommand());
             app.registerCommand(new DeleteTransactionCommand());
+            app.registerCommand(new ListTransactionCommand());
             app.registerCommand(new ExitApplicationCommand());
 
 

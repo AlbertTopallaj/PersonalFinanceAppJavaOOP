@@ -7,7 +7,7 @@ public abstract class Command {
     protected final String name;
     protected final String description;
 
-    private final ArrayList<Command> commands = new ArrayList<>();
+    protected final ArrayList<Command> commands = new ArrayList<>();
 
     public Command(String name, String description){
 

@@ -2,7 +2,7 @@ package models;
 
 public class ExitApplication {
 
-    public static void run() {
+    public void run() {
 
         System.out.println("Programmet avslutas");
 

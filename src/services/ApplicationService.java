@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class ApplicationService implements ICommand {
 
     private final ArrayList<Command> commands = new ArrayList<>();
-    private boolean ApplicationIsRunning = true;
 
 
     public void registerCommand(Command command){
@@ -29,15 +28,19 @@ public class ApplicationService implements ICommand {
                 return;
 
             }
-            System.out.println(commandInput + " är ett okänt kommando");
+
         }
+            System.out.println(commandInput + " är ett okänt kommando");
+
     }
-
-
     public void run() {
+
+        Scanner scan = new Scanner(System.in);
 
         System.out.println("=== PERSONAL FINANCE APP ===");
         System.out.println("Välkommen! Välj ett kommando:\n");
+
+        while (true) {
 
         for (Command command : commands){
 
@@ -45,20 +48,15 @@ public class ApplicationService implements ICommand {
 
         }
 
-        Scanner scan = new Scanner(System.in);
-        while (ApplicationIsRunning){
 
-            System.out.println("\n> ");
+
+
+            System.out.print("> ");
             String input = scan.nextLine();
 
-            if (input.equalsIgnoreCase("exit")){
+            executeCommand(input);
 
-                System.out.println("Avslutar programmet...");
-                ApplicationIsRunning = false;
 
-            } else {
-                executeCommand(input);
-            }
         }
     }
 }

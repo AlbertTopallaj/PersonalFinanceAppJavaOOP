@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
+    protected static int nextId = 1;
     protected int ID;
     protected String description;
     protected int amount;
