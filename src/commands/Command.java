@@ -1,9 +1,13 @@
 package commands;
 
-public class Command {
+import java.util.ArrayList;
 
-    protected String name;
-    protected String description;
+public abstract class Command {
+
+    protected final String name;
+    protected final String description;
+
+    private final ArrayList<Command> commands = new ArrayList<>();
 
     public Command(String name, String description){
 
@@ -12,24 +16,20 @@ public class Command {
 
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void createCommand(){
+
+        commands.add(this);
+
     }
 
     public String getName() {
         return name;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public String getDescription() {
         return description;
     }
 
-    @Override
-    public String toString() {
-        return name + description;
-    }
+
+    public abstract void execute();
 }

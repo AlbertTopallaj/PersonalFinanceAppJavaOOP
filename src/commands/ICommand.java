@@ -2,6 +2,7 @@ package commands;
 
 public interface ICommand {
 
-    void execute();
+    void registerCommand(Command command);
+    void executeCommand(String commandInput);
 
 }

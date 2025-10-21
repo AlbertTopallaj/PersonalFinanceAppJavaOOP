@@ -1,43 +1,56 @@
 package models;
 
 
+import commands.CreateTransactionCommand;
+import commands.DeleteTransactionCommand;
+import commands.ExitApplicationCommand;
 import services.ApplicationService;
 
 import java.util.Scanner;
 
 public class Login {
 
-    private void UserLoginOutprint(){
+    protected String username;
+    protected String password;
+
+    public void run() {
 
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Ange ditt användarnamn ");
 
-        String username = scan.nextLine();
+        System.out.println();
+        System.out.println();
+        System.out.println("=== INLOGGNING PERSONAL FINANCE APP ===");
+
+        System.out.println("Vänligen ange dina inloggningsuppgifter");
 
         System.out.println();
 
-        System.out.println("Ange ditt lösenord");
+        System.out.println("Användarnamn: ");
+
+        String username = scan.nextLine();
+
+        System.out.println("Lösenord: ");
 
         String password = scan.nextLine();
 
+        if (password.equals("1234") && username.equals("admin")) {
 
-    }
+            System.out.println("Inloggningen lyckades ");
 
-    private void LoginAuth(String username, String password){
+            ApplicationService app = new ApplicationService();
 
-        if (username == "admin" && password == "1234"){
+            app.registerCommand(new CreateTransactionCommand());
+            app.registerCommand(new DeleteTransactionCommand());
+            app.registerCommand(new ExitApplicationCommand());
 
-            ApplicationService Application = new ApplicationService();
 
-            Application.run();
+            app.run();
 
         } else {
 
-            System.out.println("Fel användarnamn eller lösenord");
+            System.out.println("Inloggnignen misslyckades");
 
         }
-
     }
-
 }
