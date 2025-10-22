@@ -41,9 +41,9 @@ public class Login {
 
             ApplicationService app = new ApplicationService();
 
-            app.registerCommand(new CreateTransactionCommand());
-            app.registerCommand(new DeleteTransactionCommand());
-            app.registerCommand(new ListTransactionCommand());
+            app.registerCommand(new CreateTransactionCommand(app.getTransactions()));
+            app.registerCommand(new DeleteTransactionCommand(app.getTransactions()));
+            app.registerCommand(new ListTransactionCommand(app.getTransactions()));
             app.registerCommand(new ExitApplicationCommand());
 
 

@@ -1,7 +1,5 @@
 package commands;
 
-import models.ExitApplication;
-
 public class ExitApplicationCommand extends Command {
 
 

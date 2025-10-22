@@ -1,5 +1,6 @@
 package services;
 
+import Transaction.Transaction;
 import commands.Command;
 import commands.ICommand;
 
@@ -9,7 +10,12 @@ import java.util.Scanner;
 
 public class ApplicationService implements ICommand {
 
-    private final ArrayList<Command> commands = new ArrayList<>();
+    protected final ArrayList<Command> commands = new ArrayList<>();
+    protected final ArrayList<Transaction> transactions = new ArrayList<>();
+
+    public ArrayList<Transaction> getTransactions(){
+        return transactions;
+    }
 
 
     public void registerCommand(Command command){
