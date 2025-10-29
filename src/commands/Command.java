@@ -1,24 +1,20 @@
 package commands;
 
+import services.ITransactionService;
+
 import java.util.ArrayList;
 
 public abstract class Command {
 
     protected final String name;
     protected final String description;
+    protected final ITransactionService transactionService;
 
-    protected final ArrayList<Command> commands = new ArrayList<>();
-
-    public Command(String name, String description){
+    public Command(String name, String description, ITransactionService transactionService) {
 
         this.name = name;
         this.description = description;
-
-    }
-
-    public void createCommand(){
-
-        commands.add(this);
+        this.transactionService = transactionService;
 
     }
 
@@ -29,7 +25,13 @@ public abstract class Command {
     public String getDescription() {
         return description;
     }
+    @Override
+    public String toString(){
 
+        return name + " - " + description;
 
-    public abstract void execute();
+    }
+
+    public abstract void execute() throws Exception;
 }
+
