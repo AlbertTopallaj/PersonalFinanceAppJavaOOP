@@ -1,12 +1,11 @@
-import services.SystemService;
-
+import models.Login;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
-        SystemService System = new SystemService();
+        Login login = new Login();
 
-        System.run();
+        login.run();
 
     }
 }
