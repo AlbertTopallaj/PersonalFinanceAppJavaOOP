@@ -1,33 +1,32 @@
 package Transaction;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 public class Transaction {
 
-    protected static int nextId = 1;
-    protected int ID;
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+
+    protected UUID ID;
     protected String description;
     protected int amount;
-    protected LocalDateTime dateTime;
+    protected LocalDateTime date;
+    protected boolean isIncome;
 
-    public Transaction(int ID, String description, int amount, LocalDateTime dateTime){
-
-        this.ID = ID++;
+    public Transaction(String description, int amount, LocalDateTime date, boolean isIncome){
+        this.ID = UUID.randomUUID();
         this.description = description;
         this.amount = amount;
-        this.dateTime = dateTime;
-
+        this.date = date;
+        this.isIncome = isIncome;
     }
 
-    public void setID(int ID) {
-        this.ID = ID;
-    }
-
-    public int getID() {
+    public UUID getID() {
         return ID;
     }
 
-    public void setDescription() {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -35,7 +34,7 @@ public class Transaction {
         return description;
     }
 
-    public void setAmount(){
+    public void setAmount(int amount){
         this.amount = amount;
     }
 
@@ -44,15 +43,26 @@ public class Transaction {
     }
 
     public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+        this.date = dateTime;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public boolean getType() {
+        return isIncome;
+    }
+
+    public void setIncome(boolean income) {
+        isIncome = income;
     }
 
     @Override
     public String toString() {
-        return super.toString();
+
+        return ID + description + amount + date + isIncome;
+
+
     }
 }
