@@ -155,8 +155,9 @@ public class ListTransactionCommand extends Command { // Ärver från Command
                 System.out.println("Ange år (yyyy):");
                 int year = Integer.parseInt(scan.nextLine());
                 transactions = transactions.stream()
-                        .filter(t -> Year.from(t.getDate()).getValue() == year)
+                        .filter(t -> t.getDate().getYear() == year)
                         .toList();
+
                 break;
 
             case "samtliga":
@@ -172,6 +173,16 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         if (transactions.isEmpty()){
             System.out.println("Inga transaktioner hittades.");
             return;
+        }
+
+        // Loopar alla transaktioner samt skriver ut resultat efter filtering
+        System.out.println("Efter filtering:");
+        for (Transaction t : transactions) {
+            System.out.println("ID " + t.getID() +
+                    ", BESKRIVNING: " + t.getDescription() +
+                    ", BELOPP: " + t.getAmount() +
+                    ", DATUM: " + t.getDate().format(formatter) +
+                    ", TYP: " + (t.getType() ? "Inkomst" : "Utgift"));
         }
     }
 }
