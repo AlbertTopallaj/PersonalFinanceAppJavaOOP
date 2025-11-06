@@ -1,18 +1,24 @@
 package commands;
 
-public class ExitApplicationCommand extends Command {
+import services.ITransactionService;
+
+public class ExitApplicationCommand extends Command { // Ärver från kommando
 
 
-    public ExitApplicationCommand() {
-        super("avsluta", "Avsluta programmet");
+    public ExitApplicationCommand(ITransactionService transactionService) { // Konstruktor för kommandot
+        // Namnet samt beskrivningen sätts för kommandot, transactionService används också
+        super("avsluta", "Avsluta programmet", transactionService);
     }
 
     @Override
     public void execute() {
+        // Metoden för kommandot
 
-        ExitApplication exitApplication = new ExitApplication();
+        // Utskrift till användaren
+        System.out.println("Programmet avslutas");
 
-        exitApplication.run();
+        // Programmet stängs ner
+        System.exit(0);
 
     }
 }
