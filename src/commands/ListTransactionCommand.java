@@ -155,7 +155,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
                 System.out.println("Ange år (yyyy):");
                 int year = Integer.parseInt(scan.nextLine());
                 transactions = transactions.stream()
-                        .filter(t -> t.getDate().getYear() == year)
+                        .filter(t -> Year.from(t.getDate()).getValue() == year)
                         .toList();
                 break;
 
