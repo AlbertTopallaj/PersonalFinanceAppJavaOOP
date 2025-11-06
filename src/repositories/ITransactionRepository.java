@@ -1,14 +1,16 @@
-package repostiores;
+package repositories;
 
 import Transaction.Transaction;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface ITransactionRepository {
 
-    Transaction findById(int ID) throws Exception;
+    // Metoder för transaktioner
+    Transaction findById(UUID ID) throws Exception;
     List<Transaction> findAll() throws Exception;
     void save(Transaction transaction) throws Exception;
-    void delete(int ID) throws Exception;
+    void delete(UUID ID) throws Exception;
 
 }
