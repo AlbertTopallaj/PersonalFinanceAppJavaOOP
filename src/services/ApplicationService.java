@@ -3,66 +3,49 @@ package services;
 import Transaction.Transaction;
 import commands.Command;
 import commands.ICommand;
+import repositories.FileTransactionRepository;
+import repositories.ITransactionRepository;
 
-import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class ApplicationService implements ICommand {
 
-    protected final ArrayList<Command> commands = new ArrayList<>();
-    protected final ArrayList<Transaction> transactions = new ArrayList<>();
+    // Listan med alla kommandon deklarerad
+    private final List<Command> commands = new ArrayList<>();
 
-    public ArrayList<Transaction> getTransactions(){
-        return transactions;
+    // Deklarera ITransactionService
+    private final ITransactionService transactionService;
+
+    public ApplicationService(ITransactionService transactionService){ // Konstruktor för ITransactionService
+        this.transactionService = transactionService;
     }
 
-
-    public void registerCommand(Command command){
-        commands.add(command);
-
+    public ITransactionService getTransactionService(){ // Getter för ITransactionService
+        return transactionService;
     }
 
     @Override
-    public void executeCommand(String commandInput) {
+    public void registerCommand(Command command){ // Metod för att registera kommandon
+        commands.add(command);
+    }
 
-        for (Command command : commands){
-
+    @Override
+    public void executeCommand(String commandInput) throws Exception {
+        // Metod för att söka och köra kommandon
+        for (Command command : commands) {
             if (command.getName().equalsIgnoreCase(commandInput)) {
-
                 command.execute();
                 return;
-
             }
-
         }
-            System.out.println(commandInput + " är ett okänt kommando");
-
+        // Utskrift till användaren
+        System.out.println(commandInput + " är ett okänt kommando");
     }
-    public void run() {
 
-        Scanner scan = new Scanner(System.in);
-
-        System.out.println("=== PERSONAL FINANCE APP ===");
-        System.out.println("Välkommen! Välj ett kommando:\n");
-
-        while (true) {
-
-        for (Command command : commands){
-
-            System.out.println(" " + command.getName() + " - " + command.getDescription());
-
-        }
-
-
-
-
-            System.out.print("> ");
-            String input = scan.nextLine();
-
-            executeCommand(input);
-
-
-        }
+    public List<Command> getCommands(){
+        // Returnerar en lista med alla registerade kommandon
+        return commands;
     }
 }
