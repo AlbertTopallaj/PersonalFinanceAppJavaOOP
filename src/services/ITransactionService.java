@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 
 public interface ITransactionService {
-
     // Samtliga metoder för hanteringen av transaktioner
 
     Transaction findById(UUID ID) throws Exception;
