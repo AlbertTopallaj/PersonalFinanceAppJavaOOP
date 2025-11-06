@@ -2,53 +2,96 @@ package commands;
 
 
 import Transaction.Transaction;
+import services.ITransactionService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 
-public class CreateTransactionCommand extends Command {
+public class CreateTransactionCommand extends Command { // Ärver från kommando
 
-    protected final ArrayList<Transaction> transactions;
+    public CreateTransactionCommand(ITransactionService transactionService) { // Konstruktor för kommandot
+        // Namn samt beskrivning för kommandot sätts, transactionService används
+        super("skapa", "Lägg till en ny transaktion", transactionService);
 
-    public CreateTransactionCommand(ArrayList<Transaction> transactions) {
-        super("skapa", "Lägg till en ny transaktion");
-        this.transactions = transactions;
     }
 
     @Override
-    public void execute(){
+    public void execute() throws Exception {
+        // Metoden för att köra kommandot
 
+        // Scanner deklareras
         Scanner scan = new Scanner(System.in);
 
-        this.ID = nextId++;
+        // Utskrift till användaren
+        System.out.println("Skapa en transaktion");
+        System.out.print("Ange mängden pengar i svenska kronor (SEK) ");
 
-        System.out.println("Ange beskrivning för transaktion");
+        // Transaktionens kronor tas emot
+        int amount = Integer.parseInt(scan.nextLine());
 
-        this.description = scan.nextLine();
+        // Utskrift till användaren
+        System.out.println("Ange beskrivning för transaktionen");
 
-        System.out.println();
+        // Beskrivningen för transaktionen tas emot
+        String description = scan.nextLine();
 
-        System.out.println("Ange pengar i svenska kronor (SEK)");
+        // Datumet sätts som null
+        LocalDateTime date = null;
 
-        this.amount = scan.nextInt();
-        scan.nextLine();
+        // Formatterar om datumet
+        DateTimeFormatter formatter = Transaction.DATE_FORMAT;
 
-        System.out.println("Ange datum för transaktionen (format: yyyy-MM-dd HH:mm):");
+        // Medan date är null
+        while (date == null) {
 
-        String dateInput = scan.nextLine();
+            // Användaren anger datumet för transaktionen
+            System.out.println("Ange datum för transaktionen i följande format (t.ex. 2025-01-01 12:00)");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        this.date = LocalDateTime.parse(dateInput, formatter);
+            // Scanner tar emot användarens svar
+            String dateInput = scan.nextLine();
 
-        Transaction newTransaction = new Transaction(this.ID, this.description, this.amount, this.date);
+            // Try Catch
+            try {
+                // Ser så att datumet är korrekt formatterat
+                date = LocalDateTime.parse(dateInput, formatter);
+            } catch (DateTimeParseException e) {
 
-        transactions.add(newTransaction);
+                // Skriver ut felmeddelande
+                System.out.println("Felaktigt datumformat! Försök igen");
 
-        System.out.println("Transaktionen " + this.description + " skapades");
+            }
+        }
 
+        // isIncome sätts alltid som false, dvs att alla transaktioner blir alltid utgifter
+        boolean isIncome = false;
+
+        // Utskrift till användaren
+        System.out.println("Är detta en inkomst (JA/NEJ)");
+
+        // Scanner tar emot om vilken typ av transaktionen är
+        String incomeAnswer = scan.nextLine();
+
+        // Om svaret är ja
+        if (incomeAnswer.equalsIgnoreCase("ja")){
+
+            // Då är transaktionen en inkomst
+            isIncome = true;
+
+        }
+
+        // Behövs därför ingen else sats, för att alla transaktioner kommer som utgifter som standard
+
+        // Transaktionen skapas
+        Transaction transaction = new Transaction(description, amount, date, isIncome);
+
+        // Transaktionen sparas i service
+        transactionService.save(transaction);
+
+        // Utskrift till användaren
+        System.out.println("Transaktionen " + description + " skapades." );
 
     }
 }
