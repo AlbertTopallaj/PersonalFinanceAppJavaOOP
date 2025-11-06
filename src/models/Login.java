@@ -5,53 +5,50 @@ import commands.CreateTransactionCommand;
 import commands.DeleteTransactionCommand;
 import commands.ExitApplicationCommand;
 import commands.ListTransactionCommand;
+import repositories.FileTransactionRepository;
 import services.ApplicationService;
+import services.ITransactionService;
+import services.TransactionService;
 
 import java.util.Scanner;
 
 public class Login {
 
-    protected String username;
-    protected String password;
+    // Hårdkodade inloggningsuppgifter
+    private final String correctUsername = "admin";
+    private final String correctPassword = "1234";
 
-    public void run() {
-
+    public boolean authenticate() {
+        // Scanner deklarerad
         Scanner scan = new Scanner(System.in);
 
-
-        System.out.println();
-        System.out.println();
-        System.out.println("=== INLOGGNING PERSONAL FINANCE APP ===");
-
-        System.out.println("Vänligen ange dina inloggningsuppgifter");
-
-        System.out.println();
-
+        // Utskrift till användaren
+        System.out.println("\n=== INLOGGNING PERSONAL FINANCE APP ===");
         System.out.println("Användarnamn: ");
 
+        // Scanner för användarnamn
         String username = scan.nextLine();
 
         System.out.println("Lösenord: ");
 
+        // Scanner för lösenord
         String password = scan.nextLine();
 
-        if (password.equals("1234") && username.equals("admin")) {
+        // Kollar om det är rätt lösenord och användarnamn
+        if (username.equalsIgnoreCase(correctUsername) && password.equals(correctPassword)) {
 
-            System.out.println("Inloggningen lyckades ");
+            // Utskrift till användaren
+            System.out.println("Inloggninen lyckades");
 
-            ApplicationService app = new ApplicationService();
-
-            app.registerCommand(new CreateTransactionCommand(app.getTransactions()));
-            app.registerCommand(new DeleteTransactionCommand(app.getTransactions()));
-            app.registerCommand(new ListTransactionCommand(app.getTransactions()));
-            app.registerCommand(new ExitApplicationCommand());
-
-
-            app.run();
-
+            // Returnerar true
+            return true;
         } else {
 
-            System.out.println("Inloggnignen misslyckades");
+            // Utskrift till användaren
+            System.out.println("Inloggning misslyckades");
+
+            // Returnerar false
+            return false;
 
         }
     }
