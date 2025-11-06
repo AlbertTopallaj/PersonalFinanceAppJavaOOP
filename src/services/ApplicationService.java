@@ -22,12 +22,14 @@ public class ApplicationService implements ICommand {
         this.transactionService = transactionService;
     }
 
-    public ITransactionService getTransactionService(){ // Getter för ITransactionService
+    // Getter för ITransactionService
+    public ITransactionService getTransactionService(){
         return transactionService;
     }
 
     @Override
-    public void registerCommand(Command command){ // Metod för att registera kommandon
+    // Metod för att registera kommando
+    public void registerCommand(Command command){
         commands.add(command);
     }
 
