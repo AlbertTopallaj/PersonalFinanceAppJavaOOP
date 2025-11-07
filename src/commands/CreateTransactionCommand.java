@@ -2,6 +2,7 @@ package commands;
 
 
 import Transaction.Transaction;
+import enums.TransactionType;
 import services.ITransactionService;
 
 import java.time.LocalDateTime;
@@ -65,27 +66,24 @@ public class CreateTransactionCommand extends Command { // Ärver från kommando
             }
         }
 
-        // isIncome sätts alltid som false, dvs att alla transaktioner blir alltid utgifter
-        boolean isIncome = false;
-
         // Utskrift till användaren
-        System.out.println("Är detta en inkomst (JA/NEJ)");
+        System.out.println("Är detta en inkomst eller utgift (INKOMST/UTGIFT)");
 
         // Scanner tar emot om vilken typ av transaktionen är
-        String incomeAnswer = scan.nextLine();
+        String typeInput = scan.nextLine().trim().toUpperCase();
 
-        // Om svaret är ja
-        if (incomeAnswer.equalsIgnoreCase("ja")){
-
-            // Då är transaktionen en inkomst
-            isIncome = true;
-
+        TransactionType type;
+        try {
+            type = TransactionType.valueOf(typeInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Felaktig typ. Sätts som UTGIFT som standard");
+            type = TransactionType.UTGIFT;
         }
 
         // Behövs därför ingen else sats, för att alla transaktioner kommer som utgifter som standard
 
         // Transaktionen skapas
-        Transaction transaction = new Transaction(description, amount, date, isIncome);
+        Transaction transaction = new Transaction(description, amount, date, type);
 
         // Transaktionen sparas i service
         transactionService.save(transaction);

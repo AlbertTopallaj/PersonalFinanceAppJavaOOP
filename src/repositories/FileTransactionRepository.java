@@ -1,6 +1,7 @@
 package repositories;
 
 import Transaction.Transaction;
+import enums.TransactionType;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -32,15 +33,16 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
             String description = reader.readLine();
             String amountString = reader.readLine();
             String dateString = reader.readLine();
-            String isIncomeString = reader.readLine();
+            String typeString = reader.readLine();
 
             // Parsar variabler
             int amount = Integer.parseInt(amountString.trim());
             LocalDateTime date = LocalDateTime.parse(dateString.trim(), Transaction.DATE_FORMAT);
-            boolean isIncome = isIncomeString.trim().equalsIgnoreCase("Inkomst");
+
+            TransactionType type = TransactionType.valueOf(typeString.trim().toUpperCase());
 
             // Skapar transaktion
-            Transaction transaction = new Transaction(ID, description, amount, date, isIncome);
+            Transaction transaction = new Transaction(ID, description, amount, date, type);
 
             // Returnerar transaktionen
             return transaction;
@@ -123,7 +125,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
                     .append("\n")
                     .append(transaction.getDate().format(Transaction.DATE_FORMAT))
                     .append("\n")
-                    .append(transaction.getType() ? "Inkomst" : "Utgift");
+                    .append(transaction.getType().getDisplayName());
         }
     }
 

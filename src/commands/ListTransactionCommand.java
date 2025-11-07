@@ -1,12 +1,10 @@
 package commands;
 
 import Transaction.Transaction;
+import enums.TransactionType;
 import services.ITransactionService;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.Year;
-import java.time.YearMonth;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.WeekFields;
 import java.util.List;
@@ -71,7 +69,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
                     ", BESKRIVNING: " + t.getDescription() +
                     ", BELOPP: " + t.getAmount() +
                     ", DATUM: " + t.getDate().format(formatter) +
-                    ", TYP: " + (t.getType() ? "Inkomst" : "Utgift"));
+                    ", TYP: " + (t.getType()));
         }
 
         // Filteringen av transaktioner
@@ -83,15 +81,14 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         switch (type.toLowerCase()) {
 
             case "inkomst":
-                // OBS: Transaction::getType måste returnera boolean där true = inkomst
                 transactions = transactions.stream()
-                        .filter(Transaction::getType) // <-- OK om getType() returnerar true/false
+                        .filter(transaction -> transaction.getType() == TransactionType.INKOMST)
                         .toList();
                 break;
 
             case "utgift":
                 transactions = transactions.stream()
-                        .filter(transaction -> !transaction.getType()) // <-- OK om getType() returnerar true/false
+                        .filter(transaction -> transaction.getType() == TransactionType.UTGIFT)
                         .toList();
                 break;
 
@@ -112,58 +109,113 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         // Användaren väljer vad de vill filtera med
         switch (filter.toLowerCase()) {
 
+            // Välja att filtera med dag
             case "dag":
+
+                // Utskrift till användaren
                 System.out.println("Ange datum (t.ex 2010-01-01): ");
+
+                // Scanner tar emot datumet
                 String dayInput = scan.nextLine();
 
-                // Bättre att använda LocalDate istället för LocalDateTime
-                LocalDate day = LocalDate.parse(dayInput); // <-- FIX: ändrat från LocalDateTime
+                // Inputen parsar
+                LocalDate day = LocalDate.parse(dayInput);
+
+                // Filterar igenom hela transaktionslistan
                 transactions = transactions.stream()
-                        .filter(transaction -> transaction.getDate().toLocalDate().equals(day)) // <-- OK
+
+                        // Sen filteras listan med detta angivna datumet
+                        .filter(transaction -> transaction.getDate().toLocalDate().equals(day))
+
+                        // Resultatet skickas till listan
                         .toList();
                 break;
 
+                // Välja att filtera med vecka
             case "vecka":
+
+                // Utskrift till användaren
                 System.out.println("Ange datum inom veckan (t.ex 2000-01-01): ");
+
+                // Scanner tar emot datumet
                 String weekInput = scan.nextLine();
-                LocalDate week = LocalDate.parse(weekInput); // <-- FIX: använd LocalDate
 
-                WeekFields wf = WeekFields.ISO;
-                int targetWeek = week.get(wf.weekOfWeekBasedYear());
-                int targetYear = week.get(wf.weekBasedYear()); // <-- FIX: använd weekBasedYear() istället för getYear()
+                // Inputen parsar
+                LocalDate week = LocalDate.parse(weekInput);
 
+                // Veckans start med måndag
+                LocalDate weekStart = week.with(DayOfWeek.MONDAY);
+
+                // Veckans slut med söndag
+                LocalDate weekEnd = week.with(DayOfWeek.SUNDAY);
+
+                // Filterar igenom hela transaktionlistan
                 transactions = transactions.stream()
+
+                        // Filterar om datumet finns inom veckans start och slut
                         .filter(t -> {
-                            LocalDate tDate = t.getDate().toLocalDate();
-                            int transactionWeek = tDate.get(wf.weekOfWeekBasedYear());
-                            int transactionYear = tDate.get(wf.weekBasedYear()); // <-- FIX
-                            return transactionWeek == targetWeek && transactionYear == targetYear;
+
+                            // Hämtar datumet
+                            LocalDate date = t.getDate().toLocalDate();
+
+                            // Returnerar true om transaktionens datum ligger inom veckan inklusive måndag och söndag
+                            return !date.isBefore(weekStart) && !date.isAfter(weekEnd);
                         })
+
+                        // Resultat skickas till listan
                         .toList();
                 break;
 
+                // Välja att filtera med månad
             case "månad":
+
+                // Utskrift till användaren
                 System.out.println("Ange år och månad (yyyy-MM):");
+
+                // Tar emot datumet
                 String monthInput = scan.nextLine();
+
+                // Inputen parsar
                 YearMonth month = YearMonth.parse(monthInput);
+
+                // Filtererar igenom hela transaktionslistan
                 transactions = transactions.stream()
+
+                        // Sen filteras datumet och ser vilken månad transaktioner passar med
                         .filter(t -> YearMonth.from(t.getDate()).equals(month))
+
+                        // Resultatet skickas till listan
                         .toList();
                 break;
 
+                // Välja att filtera med år
             case "år":
+
+                // Utskrift till användaren
                 System.out.println("Ange år (yyyy):");
+
+                // Inputen parsas
                 int year = Integer.parseInt(scan.nextLine());
+
+                // Filterar igenom hela transaktionslistan
                 transactions = transactions.stream()
+
+                        // Sen filteras datumet och ser vilket år transaktioner passar med
                         .filter(t -> t.getDate().getYear() == year)
+
+                        // Resultatet skickas till listan
                         .toList();
 
                 break;
+
 
             case "samtliga":
 
+                // Ingen filtering behövs för samtliga
+
                 break;
 
+                // Standard att detta skrivs ut
             default:
                 System.out.println("Ogiltigt val, visar samtliga.");
                 break;
@@ -182,7 +234,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
                     ", BESKRIVNING: " + t.getDescription() +
                     ", BELOPP: " + t.getAmount() +
                     ", DATUM: " + t.getDate().format(formatter) +
-                    ", TYP: " + (t.getType() ? "Inkomst" : "Utgift"));
+                    ", TYP: " + (t.getType()));
         }
     }
 }

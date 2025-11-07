@@ -1,5 +1,6 @@
 package Transaction;
 
+import enums.TransactionType;
 import services.TransactionService;
 
 import java.time.LocalDateTime;
@@ -24,24 +25,24 @@ public class Transaction {
     private LocalDateTime date;
 
     // Typ
-    private boolean isIncome;
+    private TransactionType type;
 
     // Konstruktor för transaktionen med genererat UUID
-    public Transaction(String description, int amount, LocalDateTime date, boolean isIncome) {
+    public Transaction(String description, int amount, LocalDateTime date, TransactionType type) {
         this.ID = UUID.randomUUID();
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.isIncome = isIncome;
+        this.type = type;
     }
 
     // Konstruktor med färdig genererat UUID
-    public Transaction(UUID ID, String description, int amount, LocalDateTime date, boolean isIncome) {
+    public Transaction(UUID ID, String description, int amount, LocalDateTime date, TransactionType type) {
         this.ID = ID;
         this.description = description;
         this.amount = amount;
         this.date = date;
-        this.isIncome = isIncome;
+        this.type = type;
     }
 
     // Getters och setters för samtliga variabler
@@ -74,12 +75,12 @@ public class Transaction {
         return date;
     }
 
-    public boolean getType() {
-        return isIncome;
+    public TransactionType getType() {
+        return type;
     }
 
-    public void setIncome(boolean income) {
-        isIncome = income;
+    public void setIncome(TransactionType type) {
+        this.type = type;
     }
 }
 
