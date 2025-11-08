@@ -16,7 +16,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
     private static final String EXTENSION = ".txt";
 
     @Override
-    public Transaction findById(UUID ID) throws Exception {
+    public Transaction findById(UUID ID) throws IOException {
         // Metod för att hitta transaktion
 
         // Hämta filnamnet vilket är ID
@@ -50,7 +50,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
     }
 
     @Override
-    public List<Transaction> findAll() throws Exception {
+    public List<Transaction> findAll() throws IOException {
         // Metod för att hitta alla transaktioner
 
         // Hämta listan med alla transaktioner
@@ -92,7 +92,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
     }
 
     @Override
-    public void delete(UUID ID) throws Exception {
+    public void delete(UUID ID) throws IOException {
         // Metod för att radera transaktioner
 
         // Hämta filnamnet
@@ -107,7 +107,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
     }
 
     @Override
-    public void save(Transaction transaction) throws Exception {
+    public void save(Transaction transaction) throws IOException {
         // Metod för att spara transaktioner
 
         // Hämta filnamnet som är UUID

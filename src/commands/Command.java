@@ -19,10 +19,8 @@ public abstract class Command {
     private final String description;
     protected final ITransactionService transactionService;
 
+    // Konstruktor för alla kommandon
     public Command(String name, String description, ITransactionService transactionService) {
-
-        // Konstruktor för alla kommandon
-        // Värdena sätts
 
 
         this.name = name;

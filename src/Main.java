@@ -2,6 +2,8 @@ import commands.CreateTransactionCommand;
 import commands.DeleteTransactionCommand;
 import commands.ExitApplicationCommand;
 import commands.ListTransactionCommand;
+import models.AuthenticationService;
+import models.IAuthenticator;
 import models.Login;
 import repositories.FileTransactionRepository;
 import services.*;
@@ -10,8 +12,11 @@ import utility.TransactionFilter;
 public class Main {
     public static void main(String[] args) throws Exception {
 
+        // Skapar objekt och sätter lösenord
+        IAuthenticator authenticator = new AuthenticationService("admin", "1234");
+
         // Starta Login objektet
-        Login login = new Login();
+        Login login = new Login(authenticator);
 
         // Om man lyckas logga in korrekt
         if (login.authenticate()) {

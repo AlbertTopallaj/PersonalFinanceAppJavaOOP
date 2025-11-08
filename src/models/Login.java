@@ -14,9 +14,12 @@ import java.util.Scanner;
 
 public class Login {
 
-    // Hårdkodade inloggningsuppgifter
-    private final String correctUsername = "admin";
-    private final String correctPassword = "1234";
+    private final IAuthenticator authenticator;
+
+    public Login(IAuthenticator authenticator){
+        this.authenticator = authenticator;
+
+    }
 
     public boolean authenticate() {
         // Scanner deklarerad
@@ -35,7 +38,7 @@ public class Login {
         String password = scan.nextLine();
 
         // Kollar om det är rätt lösenord och användarnamn
-        if (username.equalsIgnoreCase(correctUsername) && password.equals(correctPassword)) {
+        if (authenticator.authenticate(username, password)) {
 
             // Utskrift till användaren
             System.out.println("Inloggninen lyckades");
