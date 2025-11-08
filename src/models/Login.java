@@ -13,12 +13,10 @@ import services.TransactionService;
 import java.util.Scanner;
 
 public class Login {
-
     private final IAuthenticator authenticator;
 
     public Login(IAuthenticator authenticator){
         this.authenticator = authenticator;
-
     }
 
     public boolean authenticate() {
