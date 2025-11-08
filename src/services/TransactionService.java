@@ -1,11 +1,10 @@
 package services;
 
-import Transaction.Transaction;
+import models.Transaction;
 import enums.TransactionType;
 import repositories.ITransactionRepository;
 
 import java.time.LocalDate;
-import java.time.Year;
 import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,6 +102,7 @@ public class TransactionService implements ITransactionService {
     }
 
     public double getWeeklySpending(LocalDate dateTime) throws Exception {
+        // Hämta veckans utgifter
         List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
         List<Transaction> weeklyExpenses = transactionFilter.filterByWeek(expenses, dateTime);
         return weeklyExpenses.stream().mapToDouble(Transaction::getAmount).sum();

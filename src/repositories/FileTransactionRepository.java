@@ -1,6 +1,6 @@
 package repositories;
 
-import Transaction.Transaction;
+import models.Transaction;
 import enums.TransactionType;
 
 import java.io.*;

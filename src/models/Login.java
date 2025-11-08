@@ -40,14 +40,14 @@ public class Login {
             // Utskrift till användaren
             System.out.println("Inloggninen lyckades");
 
-            // Returnerar true
+            // Returnerar true vid lyckade autentisering
             return true;
         } else {
 
             // Utskrift till användaren
             System.out.println("Inloggning misslyckades");
 
-            // Returnerar false
+            // Returnerar false vid misslyckad autentisering
             return false;
 
         }

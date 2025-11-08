@@ -15,7 +15,8 @@ public class TerminalCommandService {
     }
 
     public void start() throws Exception {
-        Scanner scan = new Scanner(System.in); // Deklarerar scanner
+        // Deklarerar scanner
+        Scanner scan = new Scanner(System.in);
 
         // Utskrift till användaren
         System.out.println("=== DEV ALBERT TOPALLAJ ===");

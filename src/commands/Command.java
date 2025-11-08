@@ -15,8 +15,8 @@ public abstract class Command {
 
     // Variabler för ett kommando
 
-    protected final String name;
-    protected final String description;
+    private final String name;
+    private final String description;
     protected final ITransactionService transactionService;
 
     public Command(String name, String description, ITransactionService transactionService) {
@@ -30,7 +30,6 @@ public abstract class Command {
         this.transactionService = transactionService;
 
     }
-
     // Getters
     // Behövs inga setters då det är en abstract klass
 

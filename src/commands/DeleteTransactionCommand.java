@@ -1,10 +1,9 @@
 package commands;
 
-import Transaction.Transaction;
+import models.Transaction;
 import services.ITransactionService;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;

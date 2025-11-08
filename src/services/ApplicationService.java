@@ -1,14 +1,10 @@
 package services;
 
-import Transaction.Transaction;
 import commands.Command;
 import commands.ICommand;
-import repositories.FileTransactionRepository;
-import repositories.ITransactionRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class ApplicationService implements ICommand {
 

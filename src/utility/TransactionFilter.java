@@ -1,6 +1,6 @@
 package utility;
 
-import Transaction.Transaction;
+import models.Transaction;
 import enums.TransactionType;
 import services.ITransactionFilter;
 
@@ -34,6 +34,8 @@ public class TransactionFilter implements ITransactionFilter {
         };
     }
 
+
+    // Filtera genom datum
     @Override
     public List<Transaction> filterByDate(List<Transaction> transactions, LocalDate date) {
         return transactions.stream()
@@ -42,13 +44,15 @@ public class TransactionFilter implements ITransactionFilter {
     }
 
 
+    // Filtera genom dag
     @Override
     public List<Transaction> filterByDay(List<Transaction> transactions, LocalDate date) {
-        return transactions.stream()
-                .filter(t -> t.getDate().toLocalDate().equals(date))
-                .collect(Collectors.toList());
+        // Gör exakt samma sak som filterByDate
+
+        return filterByDate(transactions, date);
     }
 
+    // Filtera genom vecka
     @Override
     public List<Transaction> filterByWeek(List<Transaction> transactions, LocalDate date) {
         LocalDate startOfWeek = date.with(DayOfWeek.MONDAY);
@@ -62,6 +66,7 @@ public class TransactionFilter implements ITransactionFilter {
                 .collect(Collectors.toList());
     }
 
+    // Filtera genom månad
     @Override
     public List<Transaction> filterByMonth(List<Transaction> transactions, YearMonth month) {
         return transactions.stream()
@@ -69,6 +74,7 @@ public class TransactionFilter implements ITransactionFilter {
                 .collect(Collectors.toList());
     }
 
+    // Filtera genom år
     @Override
     public List<Transaction> filterByYear(List<Transaction> transactions, int year) {
         return transactions.stream()

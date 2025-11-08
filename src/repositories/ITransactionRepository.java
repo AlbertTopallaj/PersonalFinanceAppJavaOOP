@@ -1,6 +1,6 @@
 package repositories;
 
-import Transaction.Transaction;
+import models.Transaction;
 
 import java.util.List;
 import java.util.UUID;

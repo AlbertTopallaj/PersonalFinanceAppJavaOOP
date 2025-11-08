@@ -1,7 +1,6 @@
-package Transaction;
+package models;
 
 import enums.TransactionType;
-import services.TransactionService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

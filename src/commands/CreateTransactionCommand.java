@@ -1,7 +1,7 @@
 package commands;
 
 
-import Transaction.Transaction;
+import models.Transaction;
 import enums.TransactionType;
 import services.ITransactionService;
 
@@ -13,15 +13,16 @@ import java.util.Scanner;
 
 public class CreateTransactionCommand extends Command { // Ärver från kommando
 
-    public CreateTransactionCommand(ITransactionService transactionService) { // Konstruktor för kommandot
+    // Konstruktor för kommandot
+    public CreateTransactionCommand(ITransactionService transactionService) {
         // Namn samt beskrivning för kommandot sätts, transactionService används
         super("skapa", "Lägg till en ny transaktion", transactionService);
 
     }
 
     @Override
+    // Metoden för att köra kommandot
     public void execute() throws Exception {
-        // Metoden för att köra kommandot
 
         // Scanner deklareras
         Scanner scan = new Scanner(System.in);

@@ -9,9 +9,12 @@ import utility.TransactionFilter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
-        Login login = new Login(); // Starta Login objektet
 
-        if (login.authenticate()) { // Om man lyckas logga in korrekt
+        // Starta Login objektet
+        Login login = new Login();
+
+        // Om man lyckas logga in korrekt
+        if (login.authenticate()) {
 
             // Skapa objekt samt deklarera samtliga objekt
 
@@ -26,7 +29,7 @@ public class Main {
 
             // Registera samtliga kommandon
             applicationService.registerCommand(new CreateTransactionCommand(transactionService));
-            applicationService.registerCommand(new ListTransactionCommand(transactionService));
+            applicationService.registerCommand(new ListTransactionCommand(transactionService, transactionFilter));
             applicationService.registerCommand(new DeleteTransactionCommand(transactionService));
             applicationService.registerCommand(new ExitApplicationCommand(transactionService));
 
