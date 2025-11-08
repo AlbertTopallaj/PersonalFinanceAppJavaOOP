@@ -9,7 +9,7 @@ public class TerminalCommandService {
     // Deklarerar ApplicationService
     private final ApplicationService service;
 
-    public TerminalCommandService(ApplicationService service){
+    public TerminalCommandService(ApplicationService service) {
         // Konstruktor för ApplicationService
         this.service = service;
     }

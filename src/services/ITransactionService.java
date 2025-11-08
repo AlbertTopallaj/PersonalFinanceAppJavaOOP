@@ -19,25 +19,25 @@ public interface ITransactionService {
 
     void delete(UUID ID) throws IOException;
 
-    double getTotalIncome() throws IOException ;
+    double getTotalIncome() throws IOException;
 
-    double getTotalExpenses() throws IOException ;
+    double getTotalExpenses() throws IOException;
 
-    double getBalance() throws IOException ;
+    double getBalance() throws IOException;
 
-    double getDailySpending(LocalDate date) throws IOException ;
+    double getDailySpending(LocalDate date) throws IOException;
 
-    double getWeeklySpending(LocalDate date) throws IOException ;
+    double getWeeklySpending(LocalDate date) throws IOException;
 
-    double getMonthlySpending(YearMonth month) throws IOException ;
+    double getMonthlySpending(YearMonth month) throws IOException;
 
-    double getDailyIncome(LocalDate date) throws IOException ;
+    double getDailyIncome(LocalDate date) throws IOException;
 
-    double getWeeklyIncome(LocalDate date) throws IOException ;
+    double getWeeklyIncome(LocalDate date) throws IOException;
 
-    double getMonthlyIncome(YearMonth month) throws IOException ;
+    double getMonthlyIncome(YearMonth month) throws IOException;
 
-    double getYearlyIncome(int year) throws IOException ;
+    double getYearlyIncome(int year) throws IOException;
 
-    double getYearlySpending(int year) throws IOException ;
+    double getYearlySpending(int year) throws IOException;
 }

@@ -30,13 +30,13 @@ public class DeleteTransactionCommand extends Command { // Ärver från kommando
 
 
         // Om listan är tom så skrivs en utskrift till användaren om detta
-        if (transactions.isEmpty()){
+        if (transactions.isEmpty()) {
             System.out.println("Inga transaktioner att hämta");
             return;
         }
 
         // Loopar genom listan
-        for (Transaction t : transactions){
+        for (Transaction t : transactions) {
 
             // Printar alla transaktioner
             System.out.println("ID " + t.getID() +

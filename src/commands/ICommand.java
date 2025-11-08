@@ -6,6 +6,7 @@ public interface ICommand {
     // Alla kommandon utgår ifrån detta Interface
 
     void registerCommand(Command command);
+
     void executeCommand(String commandInput) throws Exception;
 
 }

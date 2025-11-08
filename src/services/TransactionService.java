@@ -58,7 +58,7 @@ public class TransactionService implements ITransactionService {
         return todayIncomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
-    public double getWeeklyIncome(LocalDate dateTime) throws IOException  {
+    public double getWeeklyIncome(LocalDate dateTime) throws IOException {
         List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
         List<Transaction> weeklyIncomes = transactionFilter.filterByWeek(incomes, dateTime);
         return weeklyIncomes.stream().mapToDouble(Transaction::getAmount).sum();

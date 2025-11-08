@@ -12,7 +12,7 @@ public enum TransactionType {
     private final String displayName;
 
     // Konstruktor för displayName
-    TransactionType(String displayName){
+    TransactionType(String displayName) {
         this.displayName = displayName;
     }
 

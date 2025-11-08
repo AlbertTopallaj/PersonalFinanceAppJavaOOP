@@ -14,18 +14,18 @@ public class ApplicationService implements ICommand {
     // Deklarera ITransactionService
     private final ITransactionService transactionService;
 
-    public ApplicationService(ITransactionService transactionService){ // Konstruktor för ITransactionService
+    public ApplicationService(ITransactionService transactionService) { // Konstruktor för ITransactionService
         this.transactionService = transactionService;
     }
 
     // Getter för ITransactionService
-    public ITransactionService getTransactionService(){
+    public ITransactionService getTransactionService() {
         return transactionService;
     }
 
     @Override
     // Metod för att registera kommando
-    public void registerCommand(Command command){
+    public void registerCommand(Command command) {
         commands.add(command);
     }
 
@@ -42,7 +42,7 @@ public class ApplicationService implements ICommand {
         System.out.println(commandInput + " är ett okänt kommando");
     }
 
-    public List<Command> getCommands(){
+    public List<Command> getCommands() {
         // Returnerar en lista med alla registerade kommandon
         return commands;
     }

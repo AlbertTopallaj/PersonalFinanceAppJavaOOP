@@ -4,6 +4,7 @@ import models.Transaction;
 import enums.TransactionType;
 import services.ITransactionFilter;
 import services.ITransactionService;
+
 import java.time.*;
 import java.util.List;
 import java.util.Scanner;
@@ -12,7 +13,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
 
     private final ITransactionFilter transactionFilter;
 
-    public ListTransactionCommand(ITransactionService transactionService, ITransactionFilter transactionFilter){ // Konstruktor för klassen
+    public ListTransactionCommand(ITransactionService transactionService, ITransactionFilter transactionFilter) { // Konstruktor för klassen
         // Namnet samt beskrivningen av kommandot sätts, samt så används transactionService
         super("lista", "Få en lista av alla transaktioner", transactionService);
         this.transactionFilter = transactionFilter;
@@ -30,7 +31,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
 
 
         // Om inga transaktioner hittades så printas meddelande ut
-        if (transactions.isEmpty()){
+        if (transactions.isEmpty()) {
             System.out.println("Inga transaktioner kunde hittas i systemet");
             return;
         }
@@ -40,7 +41,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
 
         // Alla transaktioner listas
         System.out.println("ALLA TRANSAKTIONER I SYSTEMET: ");
-        for (Transaction t : transactions){
+        for (Transaction t : transactions) {
 
             System.out.println("ID: " + t.getID() +
                     ", BESKRIVNING: " + t.getDescription() +
@@ -124,7 +125,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         // Om transaktionerna inte matchar filteringen
         if (transactions.isEmpty()) {
             System.out.println("Inga transaktioner hittades.");
-        // Om transaktionerna matchar filteringen så printas de
+            // Om transaktionerna matchar filteringen så printas de
         } else {
             System.out.println("TRANSAKTIONER:");
             for (Transaction t : transactions) {

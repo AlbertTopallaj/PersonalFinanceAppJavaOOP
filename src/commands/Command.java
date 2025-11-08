@@ -40,7 +40,7 @@ public abstract class Command {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         // ToString, visas i listan av alla kommandon i transaktionen
 
 

@@ -15,7 +15,7 @@ import java.util.Scanner;
 public class Login {
     private final IAuthenticator authenticator;
 
-    public Login(IAuthenticator authenticator){
+    public Login(IAuthenticator authenticator) {
         this.authenticator = authenticator;
     }
 

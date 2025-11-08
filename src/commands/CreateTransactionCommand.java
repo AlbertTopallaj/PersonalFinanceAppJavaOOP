@@ -90,7 +90,7 @@ public class CreateTransactionCommand extends Command { // Ärver från kommando
         transactionService.save(transaction);
 
         // Utskrift till användaren
-        System.out.println("Transaktionen " + description + " skapades." );
+        System.out.println("Transaktionen " + description + " skapades.");
 
     }
 }

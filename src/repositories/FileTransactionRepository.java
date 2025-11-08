@@ -23,7 +23,7 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
         String fileName = getFileName(ID);
 
         // Sen körs BufferedReader
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
 
             // Läser samtliga variabeler till Transaktionen
             reader.readLine();
@@ -67,13 +67,13 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
         }
 
         // For-loop genom samtliga transactionsFiler
-        for (File transactionFile : transactionFiles){
+        for (File transactionFile : transactionFiles) {
 
             // Hämtar namnet för transactionsfilen
             String name = transactionFile.getName();
 
             // Om den slutar med .txt så fortsätter vi
-            if (!name.endsWith(EXTENSION)){
+            if (!name.endsWith(EXTENSION)) {
                 continue;
             }
 
@@ -130,8 +130,8 @@ public class FileTransactionRepository implements ITransactionRepository { // Im
     }
 
     // Metod för att hämta filnamnet
-    private static String getFileName(UUID ID){
+    private static String getFileName(UUID ID) {
 
-           return ID + EXTENSION;
+        return ID + EXTENSION;
     }
 }
