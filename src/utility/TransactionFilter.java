@@ -33,7 +33,15 @@ public class TransactionFilter implements ITransactionFilter {
             default -> transactions;
         };
     }
-    
+
+    @Override
+    public List<Transaction> filterByDate(List<Transaction> transactions, LocalDate date) {
+        return transactions.stream()
+                .filter(t -> t.getDate().toLocalDate().equals(date))
+                .collect(Collectors.toList());
+    }
+
+
     @Override
     public List<Transaction> filterByDay(List<Transaction> transactions, LocalDate date) {
         return transactions.stream()

@@ -2,6 +2,7 @@ package services;
 
 import Transaction.Transaction;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Year;
 import java.time.YearMonth;
@@ -25,19 +26,19 @@ public interface ITransactionService {
 
     double getBalance() throws Exception;
 
-    double getDailySpending(LocalDateTime date) throws Exception;
+    double getDailySpending(LocalDate date) throws Exception;
 
-    double getWeeklySpending(LocalDateTime date) throws Exception;
+    double getWeeklySpending(LocalDate date) throws Exception;
 
     double getMonthlySpending(YearMonth month) throws Exception;
 
-    double getYearlySpending(Year year) throws Exception;
+    double getDailyIncome(LocalDate date) throws Exception;
 
-    double getDailyIncome(LocalDateTime date) throws Exception;
-
-    double getWeeklyIncome(LocalDateTime date) throws Exception;
+    double getWeeklyIncome(LocalDate date) throws Exception;
 
     double getMonthlyIncome(YearMonth month) throws Exception;
 
-    double getYearlyIncome(Year year) throws Exception;
+    double getYearlyIncome(int year) throws Exception;
+
+    double getYearlySpending(int year) throws Exception;
 }

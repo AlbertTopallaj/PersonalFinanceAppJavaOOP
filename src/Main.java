@@ -4,10 +4,8 @@ import commands.ExitApplicationCommand;
 import commands.ListTransactionCommand;
 import models.Login;
 import repositories.FileTransactionRepository;
-import services.ApplicationService;
-import services.ITransactionService;
-import services.TerminalCommandService;
-import services.TransactionService;
+import services.*;
+import utility.TransactionFilter;
 
 public class Main {
     public static void main(String[] args) throws Exception {
@@ -17,8 +15,10 @@ public class Main {
 
             // Skapa objekt samt deklarera samtliga objekt
 
+            ITransactionFilter transactionFilter = new TransactionFilter();
+
             // Deklarera transactionService samt FileTransactionRepository
-            ITransactionService transactionService = new TransactionService(new FileTransactionRepository());
+            ITransactionService transactionService = new TransactionService(new FileTransactionRepository(), transactionFilter);
 
             // Deklarera applicationService
             ApplicationService applicationService = new ApplicationService(transactionService);

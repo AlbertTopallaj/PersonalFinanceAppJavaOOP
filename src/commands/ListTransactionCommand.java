@@ -24,7 +24,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         Scanner scan = new Scanner(System.in);
         // Deklarerar scanner
 
-        LocalDateTime now = LocalDateTime.now();
+        LocalDate now = LocalDate.now();
         // Tar dagens datum
 
         // Utskrift till användaren med statistik
@@ -36,7 +36,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         System.out.println();
         System.out.println("Månadens inkomst: " + transactionService.getMonthlyIncome(YearMonth.from(now)) + " SEK");
         System.out.println();
-        System.out.println("Årets inkomst " + transactionService.getYearlyIncome(Year.of(now.getYear())) + " SEK");
+        System.out.println("Årets inkomst " + transactionService.getYearlyIncome((now.getYear())) + " SEK");
 
 
         System.out.println("=== UTGIFT ===");
@@ -47,7 +47,7 @@ public class ListTransactionCommand extends Command { // Ärver från Command
         System.out.println();
         System.out.println("Månadens utgift: " + transactionService.getMonthlySpending(YearMonth.from(now)) + " SEK");
         System.out.println();
-        System.out.println("Årets utgift " + transactionService.getYearlySpending(Year.of(now.getYear())) + " SEK");
+        System.out.println("Årets utgift " + transactionService.getYearlySpending((now.getYear())) + " SEK");
         System.out.println();
         System.out.println("Total inkomst: " + transactionService.getTotalIncome() + " SEK");
         System.out.println();

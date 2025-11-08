@@ -4,13 +4,11 @@ import Transaction.Transaction;
 import enums.TransactionType;
 import repositories.ITransactionRepository;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.Year;
 import java.time.YearMonth;
-import java.time.temporal.WeekFields;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 // Implementerar ITransactionService
@@ -19,9 +17,13 @@ public class TransactionService implements ITransactionService {
     // Deklarerar ITransactionRepository
     private final ITransactionRepository transactionRepository;
 
+    // Deklarerar ITransactionFilter
+    private final ITransactionFilter transactionFilter;
+
     // Konstruktor för ITransactionRepository
-    public TransactionService(ITransactionRepository transactionRepository) {
+    public TransactionService(ITransactionRepository transactionRepository, ITransactionFilter transactionFilter) {
         this.transactionRepository = transactionRepository;
+        this.transactionFilter = transactionFilter;
     }
 
     @Override
@@ -49,65 +51,43 @@ public class TransactionService implements ITransactionService {
 
     }
 
-    public double getDailyIncome(LocalDateTime dateTime) throws Exception {
+    public double getDailyIncome(LocalDate dateTime) throws Exception {
         // Hämta den dagliga inkomsten
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.INKOMST)
-                .filter(transaction -> transaction.getDate().equals(dateTime))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
+        List<Transaction> todayIncomes = transactionFilter.filterByDate(incomes, dateTime);
+        return todayIncomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
-    public double getWeeklyIncome(LocalDateTime dateTime) throws Exception {
-        // Hämta den veckovisa inkomsten
-        WeekFields wf = WeekFields.of(Locale.getDefault());
-        int targetWeek = dateTime.get(wf.weekOfWeekBasedYear());
-        int targetYear = dateTime.getYear();
-
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.INKOMST)
-                .filter(t -> {
-                    int week = t.getDate().get(wf.weekOfWeekBasedYear());
-                    int year = t.getDate().getYear();
-                    return week == targetWeek && year == targetYear;
-                })
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+    public double getWeeklyIncome(LocalDate dateTime) throws Exception {
+        List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
+        List<Transaction> weeklyIncomes = transactionFilter.filterByWeek(incomes, dateTime);
+        return weeklyIncomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
     public double getMonthlyIncome(YearMonth month) throws Exception {
         // Hämta inkomsten för månaden
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.INKOMST)
-                .filter(t -> YearMonth.from(t.getDate()).equals(month))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
+        List<Transaction> monthlyIncomes = transactionFilter.filterByMonth(incomes, month);
+        return monthlyIncomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
-
-    public double getYearlyIncome(Year year) throws Exception {
+    public double getYearlyIncome(int year) throws Exception {
         // Hämta inkomsten för året
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.INKOMST)
-                .filter(t -> t.getDate().getYear() == year.getValue())
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
+        List<Transaction> yearlyIncomes = transactionFilter.filterByYear(incomes, year);
+        return yearlyIncomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
     public double getTotalIncome() throws Exception {
         // Hämta den totala inkomsten
-          return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.INKOMST)
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> incomes = transactionFilter.filterByType(findAll(), TransactionType.INKOMST);
+        return incomes.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
     public double getTotalExpenses() throws Exception {
         // Hämta den totala utgiften
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.UTGIFT)
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
+        return expenses.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
     public double getBalance() throws Exception {
@@ -115,47 +95,31 @@ public class TransactionService implements ITransactionService {
         return getTotalIncome() - getTotalExpenses();
     }
 
-    public double getDailySpending(LocalDateTime dateTime) throws Exception {
+    public double getDailySpending(LocalDate dateTime) throws Exception {
         // Hämta dagens utgifter
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.UTGIFT)
-                .filter(t -> t.getDate().equals(dateTime))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
+        List<Transaction> dailyExpenses = transactionFilter.filterByDay(expenses, dateTime);
+        return dailyExpenses.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
-    public double getWeeklySpending(LocalDateTime dateTime) throws Exception {
-        // Hämta den veckovisa utgiften
-        WeekFields wf = WeekFields.of(Locale.getDefault());
-        int targetWeek = dateTime.get(wf.weekOfWeekBasedYear());
-        int targetYear = dateTime.getYear();
-
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.UTGIFT)
-                .filter(t -> {
-                    int week = t.getDate().get(wf.weekOfWeekBasedYear());
-                    int year = t.getDate().getYear();
-                    return week == targetWeek && year == targetYear;
-                })
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+    public double getWeeklySpending(LocalDate dateTime) throws Exception {
+        List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
+        List<Transaction> weeklyExpenses = transactionFilter.filterByWeek(expenses, dateTime);
+        return weeklyExpenses.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
     public double getMonthlySpending(YearMonth month) throws Exception {
         // Hämta utgifterna för månaden
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.UTGIFT)
-                .filter(t -> YearMonth.from(t.getDate()).equals(month))
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
+        List<Transaction> monthlyExpenses = transactionFilter.filterByMonth(expenses, month);
+        return monthlyExpenses.stream().mapToDouble(Transaction::getAmount).sum();
     }
 
-    public double getYearlySpending(Year year) throws Exception {
+    @Override
+    public double getYearlySpending(int year) throws Exception {
         // Hämta utgifterna för året
-        return findAll().stream()
-                .filter(t -> t.getType() == TransactionType.UTGIFT)
-                .filter(t -> t.getDate().getYear() == year.getValue())
-                .mapToDouble(Transaction::getAmount)
-                .sum();
+        List<Transaction> expenses = transactionFilter.filterByType(findAll(), TransactionType.UTGIFT);
+        List<Transaction> yearlyExpenses = transactionFilter.filterByYear(expenses, year);
+        return yearlyExpenses.stream().mapToDouble(Transaction::getAmount).sum();
     }
 }
